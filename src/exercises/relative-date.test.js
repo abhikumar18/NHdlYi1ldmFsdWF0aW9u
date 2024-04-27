@@ -20,7 +20,7 @@ describe('Calculate Relative Date', () => {
 
 
   it('returns "Long time ago" for any other date', () => {
-    const oldDate = new Date(2020, 0, 1); // January 1, 2020
+    const oldDate = new Date(2020, 0, 1); //
     const oldDateString = oldDate.toISOString().slice(0, 10);
     const expected = 'Long time ago';
     const actual = calculateRelativeDate(oldDateString);
