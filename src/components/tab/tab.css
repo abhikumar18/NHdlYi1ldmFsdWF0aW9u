@@ -9,3 +9,19 @@
 .c-tab--content > .c-tab--active {
     display: block;
 }
+
+.c-numeric-input {
+    /* Default input styles */
+    border: 1px solid #ccc;
+  }
+  
+  .c-numeric-input--error {
+    /* Red border for error state */
+    border-color: #ff0000;
+  }
+  
+  .c-numeric-input--valid {
+    /* Green border for valid state */
+    border-color: #00ff00;
+  }
+  

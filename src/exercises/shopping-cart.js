@@ -14,11 +14,60 @@
 * 1002   iPad
 *
 * */
-const View = {
-  init: () => {
+const View = 
+{
+  init: async () => 
+  {
     const tbodyElem = document.getElementById('shopping-cart-tbl').querySelector('tbody');
 
-    console.log('TODO: Please see the above requirement');
+    try 
+    {
+      // Fetching cart items
+      const cartResponse = await fetch('http://localhost:4002/cart');
+      const cartData = await cartResponse.json();
+      //console.log('Cart Data:', cartData);
+
+      // Fetching products
+      const productsResponse = await fetch('http://localhost:4002/products');
+      const productsData = await productsResponse.json();
+      //console.log('Products Data:', productsData);
+
+      // Create a map of product IDs to product names
+      const productMap = new Map();
+
+      productsData.forEach(product => {
+        // Convert product id to number
+        const productId = parseInt(product.id);
+        productMap.set(productId, product.name);
+      });
+      console.log('Product Map:', productMap);
+
+      // Clear any existing content in the table body
+      tbodyElem.innerHTML = '';
+
+      // Populate the table with cart items
+      cartData.forEach(item => {
+        // Convert cart item id to number
+        const itemId = parseInt(item.id);
+        const productName = productMap.get(itemId);
+        console.log('Item ID:', itemId);
+        console.log('Product Name:', productName);
+        if (productName) 
+        {
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${itemId}</td><td>${productName}</td>`;
+          tbodyElem.appendChild(row);
+        } 
+        else 
+        {
+          console.warn('Product name not found for item ID:', itemId);
+        }
+      });
+    } 
+    catch (error) 
+    {
+      console.error('Error fetching data:', error);
+    }
   }
 };
 document.addEventListener('DOMContentLoaded', View.init);
